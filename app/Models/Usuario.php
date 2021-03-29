@@ -5,8 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Usuario extends Model
-{
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+
+class Usuario extends Model implements AuthenticatableContract, CanResetPasswordContract
+{use Authenticatable, CanResetPassword;
     use HasFactory;
 
     protected $table = 'usuarios';
@@ -23,7 +28,7 @@ class Usuario extends Model
         'aniversario',
         'created_at',
         'updated_at'
-    ]    
+    ];   
     
     protected $dates = ['aniversario']; 
 }

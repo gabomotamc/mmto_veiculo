@@ -15,14 +15,16 @@ class CreateAgendamentosTable extends Migration
     {
         Schema::create('agendamentos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('id_usuario');
             $table->unsignedBigInteger('id_veiculo');
-            $table->unsignedBigInteger('id_manut_tipo'); 
-            $table->date('data_inicio'); 
             $table->date('data_entrega');
             $table->timestamps();
         });
-    }
+
+        Schema::table('agendamentos', function($table) {
+            $table->foreign('id_veiculo')->references('id')->on('veiculos')->onDelete('cascade');
+        });      
+
+    }// up
 
     /**
      * Reverse the migrations.

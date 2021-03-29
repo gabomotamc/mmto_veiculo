@@ -18,7 +18,6 @@ class Veiculo extends Model
         'id',
         'id_usuario',
         'cod_vin',
-        'cod_motor',
         'nro_placa',
         'cor',
         'marca',
@@ -27,6 +26,6 @@ class Veiculo extends Model
         'ano',        
         'created_at',
         'updated_at'
-    ]    
+    ];   
       
 }

@@ -19,7 +19,6 @@ class CreateUsuariosTable extends Migration
             $table->string('senha',100);
             $table->string('nome',50);
             $table->string('sobrenome',50);     
-            $table->date('aniversario');
             $table->timestamps();
         });
     }

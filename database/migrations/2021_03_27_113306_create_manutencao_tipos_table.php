@@ -16,7 +16,7 @@ class CreateManutencaoTiposTable extends Migration
         Schema::create('manutencao_tipos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('tipo',30);
-            $table->string('nombre',50);
+            $table->string('nome',50);
             $table->string('detalhe',100);
             $table->timestamps();
         });

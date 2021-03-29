@@ -19,12 +19,11 @@ class Agendamento extends Model
         'id_usuario',
         'id_veiculo',
         'id_manut_tipo',
-        'data_inicio',
         'data_entrega',
         'created_at',
         'updated_at'
-    ]  
+    ];
 
 
-    protected $dates = ['data_inicio','data_entrega']; 
+    protected $dates = ['data_entrega']; 
 }
