@@ -13,25 +13,36 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 ##=================================================##
 
--DATABASE ENV
+- DATABASE ENV
 
--DB_CONNECTION=mysql
--DB_HOST=127.0.0.1
--DB_PORT=3306
--DB_DATABASE=veiculo_db
--DB_USERNAME=root
--DB_PASSWORD=
+- DB_CONNECTION=mysql
+
+- DB_HOST=127.0.0.1
+
+- DB_PORT=3306
+
+- DB_DATABASE=veiculo_db
+
+- DB_USERNAME=root
+
+- DB_PASSWORD=
 
 ##=================================================##
 
 Da pasta raiz do projeto inicialize os comandos do composer
 
--composer install/update
--composer dumpautoload
--cp .env.example .env
--php artisan key:generate
--php artisan migrate
--php artisan db:seed --class=ManutencaoTipoSeeder
+- composer install/update
+
+- composer dumpautoload
+
+- cp .env.example .env
+
+- php artisan key:generate
+
+- php artisan migrate
+
+- php artisan db:seed --class=ManutencaoTipoSeeder
+
 
 ##=================================================##
 
