@@ -41,12 +41,22 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+
+        $rules = [
             'correio' => 'required',
             'senha' => 'required',
             'nome' => 'required',
-            'sobrenome' => 'required',
-        ]);
+            'sobrenome' => 'required',            
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages = [
+            'required' => 'O campo :attribute é obrigatório.',
+        ]);     
+
+        if ($validator->fails()) { 
+            $errors = $validator->errors();
+            return back()->withErrors($errors);
+        }          
 
         $objUsuario = Usuario::where('correio_eletro', $request->correio)->get();
         if(!$objUsuario->isEmpty()){
@@ -129,13 +139,35 @@ class UsuarioController extends Controller
         
     }// getDadoAgendaUsuario
 
+    public function getDadoAgendaUsuarioApi(){
+
+        return $obj = DB::table('usuarios')
+        ->join('veiculos', 'usuarios.id', '=', 'veiculos.id_usuario')
+        ->join('agendamentos', 'veiculos.id', '=', 'agendamentos.id_veiculo')
+        ->select('usuarios.nome', 'veiculos.marca', 'veiculos.nro_placa',
+            'agendamentos.data_entrega', 'agendamentos.id' )
+        ->orderBy('agendamentos.data_entrega', 'asc')
+        ->get(); 
+        
+    }// getDadoAgendaUsuario    
+
     public function autenticarLogin(Request $request)
     {
 
-        $request->validate([
+        $rules = [
             'correio' => 'required',
             'senha' => 'required',
-        ]);
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages = [
+            'required' => 'O campo :attribute é obrigatório.',
+        ]);     
+
+        if ($validator->fails()) { 
+            $errors = $validator->errors();
+            return back()->withErrors($errors);
+        }  
+
 
         $credencial = array(
             'correio' => $request->input('correio'), 

@@ -28,10 +28,16 @@ class AgendamentoController extends Controller
     {
         $usuarioRel = new UsuarioController;
         $objAgenda = $usuarioRel->getDadoAgendaUsuario();             
-
-        /*$objAgenda = DB::table('agendamentos')->orderBy('data_entrega', 'asc')->get();*/
         return view( 'agenda.agenda', compact('objAgenda') );
     }
+
+    public function jsonApi(){
+
+        $usuario = new UsuarioController;
+        $objAgenda = $usuario->getDadoAgendaUsuarioApi();             
+        return response()->json(['success' => $objAgenda], 201);   
+
+    }// jsonApi
 
     /**
      * Show the form for creating a new resource.
@@ -65,13 +71,20 @@ class AgendamentoController extends Controller
     public function store(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
+        $rules = [
+            'manut_tipo' => 'required',
+            'data_entrega' => 'required',
+            'id_veiculo' => 'required',                                   
+        ];
 
-            'manut_tipo' => ['required'],         
-            'data_entrega' => ['required'],
-            'id_veiculo' => ['required'],
+        $validator = Validator::make($request->all(), $rules, $messages = [
+            'required' => 'O campo :attribute é obrigatório.',
+        ]);     
 
-        ]); //validator        
+        if ($validator->fails()) { 
+            $errors = $validator->errors();
+            return back()->withErrors($errors);
+        }       
 
         $arrIdManutTipo = $request->manut_tipo;
          // Save agendamento
@@ -129,11 +142,18 @@ class AgendamentoController extends Controller
     public function update(Request $request, Agendamento $agendamento, $idAgenda)
     {
 
-        $validator = Validator::make($request->all(), [
-       
-            'data_entrega' => ['required'],
-                          
-        ]); //validator  
+        $rules = [
+         'data_entrega' => 'required',                       
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages = [
+            'required' => 'O campo :attribute é obrigatório.',
+        ]);     
+
+        if ($validator->fails()) { 
+            $errors = $validator->errors();
+            return back()->withErrors($errors);
+        }  
 
         $update = Agendamento::where('id', $idAgenda)->update( 
             ['data_entrega' => $request->data_entrega, ] 

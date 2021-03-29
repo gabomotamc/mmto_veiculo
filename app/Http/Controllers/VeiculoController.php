@@ -47,34 +47,41 @@ class VeiculoController extends Controller
     public function store(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
+        $rules = [
+            'codigo_vin' => 'required',
+            'nro_placa' => 'required',
+            'cor' => 'required',
+            'marca' => 'required',
+            'modelo' => 'required', 
+            'versao' => 'required',
+            'ano' => 'required'                                   
+        ];
 
-            'cod_vin' => ['required'],         
-            'nro_placa' => ['required'],
-            'cor' => ['required'],
-            'marca' => ['required'],
-            'modelo' => ['required'],
-            'versao' => ['required'], 
-            'ano' => ['required'],                          
-                          
-        ]); //validator  
+        $validator = Validator::make($request->all(), $rules, $messages = [
+            'required' => 'O campo :attribute é obrigatório.',
+        ]);     
 
-            $sesionUsuario = Auth::user();
-            $idUsuario = $sesionUsuario->id;
-                    
-            $storeVeiculo = new Veiculo;
-            $storeVeiculo->id_usuario = $idUsuario;
-            $storeVeiculo->cod_vin = $request->input('codigo_vin');
-            $storeVeiculo->nro_placa = $request->input('nro_placa');
-            $storeVeiculo->cor = $request->input('cor');
-            $storeVeiculo->marca = $request->input('marca');            
-            $storeVeiculo->modelo = $request->input('modelo');
-            $storeVeiculo->versao = $request->input('versao'); 
-            $storeVeiculo->ano = $request->input('ano');                             
-            $storeVeiculo->save();
+        if ($validator->fails()) { 
+            $errors = $validator->errors();
+            return back()->withErrors($errors);
+        }           
 
-            $msj = 'Você registrou seu veículo: '.$request->marca.' '.$request->modelo;
-            return redirect()->route('indexVeiculo')->with('success', $msj); 
+        $sesionUsuario = Auth::user();
+        $idUsuario = $sesionUsuario->id;
+                
+        $storeVeiculo = new Veiculo;
+        $storeVeiculo->id_usuario = $idUsuario;
+        $storeVeiculo->cod_vin = $request->input('codigo_vin');
+        $storeVeiculo->nro_placa = $request->input('nro_placa');
+        $storeVeiculo->cor = $request->input('cor');
+        $storeVeiculo->marca = $request->input('marca');            
+        $storeVeiculo->modelo = $request->input('modelo');
+        $storeVeiculo->versao = $request->input('versao'); 
+        $storeVeiculo->ano = $request->input('ano');                             
+        $storeVeiculo->save();
+
+        $msj = 'Você registrou seu veículo: '.$request->marca.' '.$request->modelo;
+        return redirect()->route('indexVeiculo')->with('success', $msj); 
     }// store
 
     /**
@@ -111,17 +118,24 @@ class VeiculoController extends Controller
     public function update(Request $request, Veiculo $veiculo,$idVei)
     {
 
-        $validator = Validator::make($request->all(), [
+        $rules = [
+            'codigo_vin' => 'required',
+            'nro_placa' => 'required',
+            'cor' => 'required',
+            'marca' => 'required',
+            'modelo' => 'required', 
+            'versao' => 'required',
+            'ano' => 'required'                                   
+        ];
 
-            'cod_vin' => ['required'],         
-            'nro_placa' => ['required'],
-            'cor' => ['required'],
-            'marca' => ['required'],
-            'modelo' => ['required'],
-            'versao' => ['required'], 
-            'ano' => ['required'],                          
-                          
-        ]); //validator 
+        $validator = Validator::make($request->all(), $rules, $messages = [
+            'required' => 'O campo :attribute é obrigatório.',
+        ]);     
+
+        if ($validator->fails()) { 
+            $errors = $validator->errors();
+            return back()->withErrors($errors);
+        }  
                 
         $update = Veiculo::where('id', $idVei)->update( 
             ['cod_vin' => $request->codigo_vin, 

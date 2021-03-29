@@ -49,9 +49,15 @@ return [
 
         'api' => [
             'driver' => 'token',
-            'provider' => 'users',
+            'provider' => 'agendamentos',
             'hash' => false,
         ],
+
+        /*'api' => [
+            'driver' => 'passport',
+            'provider' => 'agendamentos',
+            'hash' => false,
+        ],*/       
     ],
 
     /*

@@ -3,7 +3,7 @@
 
   <div class="mb-3">
     <label for="correio" class="form-label">Correio</label>
-    <input type="email" class="form-control" id="correio" name="correio" aria-describedby="emailHelp"  required="required">
+    <input type="email" class="form-control" id="correio" name="correio" aria-describedby="emailHelp" required="required">
   </div>
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">Senha</label>
